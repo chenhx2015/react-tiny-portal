@@ -1,0 +1,12 @@
+{
+    "presets": [
+      "@babel/preset-react",
+      ["latest", {
+          "es2015": {
+            "modules": false
+          }
+        }
+      ]
+    ],
+    "plugins": ["@babel/external-helpers"]
+  }
