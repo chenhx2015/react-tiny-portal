@@ -1,4 +1,3 @@
+export { default as Modal } from "./modal";
 
-export * from './modal'
-
-export { default } from './usePortal'
+export { default } from "./usePortal";

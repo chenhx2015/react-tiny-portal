@@ -6,8 +6,8 @@
   "module": "dist/index.esm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "strt": "rollup -c rollup.config.dev.js -w ",
-    "build": "rollup -c rollup.config.js"
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -26,13 +26,18 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "@babel/plugin-external-helpers": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
-    "@rollup/plugin-commonjs": "^11.1.0",
-    "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.2",
-    "babel-preset-latest": "^6.24.1",
-    "rollup": "^2.6.0",
-    "rollup-plugin-babel": "^4.4.0"
+    "babel-loader": "^8.1.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-merge": "^4.2.2"
   },
   "peerDependencies": {
     "react": "^16.8",
