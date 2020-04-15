@@ -42,7 +42,8 @@
     "rollup": "^2.6.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-livereload": "^1.2.0",
-    "rollup-plugin-serve": "^1.0.1"
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-terser": "^5.3.0"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
