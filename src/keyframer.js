@@ -1,5 +1,5 @@
 // 支持 css 动画
-import Prefixer from "inline-style-prefixer";
+// import {prefix} from "inline-style-prefixer";
 
 import { isArray, isArrayLike, makeStyle, replaceOrInsertStyle } from "./utils";
 
@@ -34,26 +34,10 @@ export const makeKeyframes = (name, prefixedKeyframes, props) => {
 class CSSKeyframer {
   constructor(options = {}) {
     const defaults = {
-      namePrefix: "",
       styleDataName: "data-keyframes",
-      userAgent: null,
     };
     this.keyframes = {};
     this.options = { ...defaults, ...options };
-    this.prefixer = new Prefixer({ userAgent: options.userAgent });
-  }
-
-  get animationProp() {
-    const { jsPrefix, cssPrefix } = this.prefixer;
-
-    return {
-      js: jsPrefix ? `${jsPrefix}Animation` : "animation",
-      css: `${cssPrefix}animation`,
-    };
-  }
-
-  getPrefixedName(name) {
-    return this.options.namePrefix + name;
   }
 
   createKeyframesString(name, keyframes) {
@@ -64,12 +48,13 @@ class CSSKeyframer {
     const prefixedKeyframes = isArray(keyframes) ? [] : {};
 
     Object.keys(keyframes).forEach((selector) => {
-      prefixedKeyframes[selector] = this.prefixer.prefix(keyframes[selector]);
+      // prefixedKeyframes[selector] = prefix(keyframes[selector]);
+      prefixedKeyframes[selector] = keyframes[selector];
     });
 
     return makeKeyframes(
-      this.getPrefixedName(name),
-      this.prefixer.prefixedKeyframes || "keyframes",
+      name,
+       "keyframes",
       prefixedKeyframes
     );
   }
@@ -81,7 +66,7 @@ class CSSKeyframer {
     const keyframesString = this.createKeyframesString(name, keyframes);
     if (keyframesString === "") return;
 
-    const el = replaceOrInsertStyle(styleDataName, this.getPrefixedName(name));
+    const el = replaceOrInsertStyle(styleDataName, name);
     if (el == null) return;
 
     el.innerHTML = keyframesString;
