@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
-import usePortal from './usePortal';
-import CSSKeyframer from 'css-keyframer';
+import React, { useCallback } from "react";
+import usePortal from "./usePortal";
+import CSSKeyframer from "./keyframe";
 
 const keyframer = new CSSKeyframer({
   /* options */
@@ -15,62 +15,64 @@ function createAnimation(portalEl, e) {
 
   // CSS property will be added vendor-prefix is automatically!
 
-  keyframer.register('portalFadeIn', {
-    '0%': {
+  keyframer.register("portalFadeIn", {
+    "0%": {
       transform: `translate(${x}px, ${y}px) scale(0.1, 0.1) `,
       opacity: 0,
     },
-    '50%': {
+    "50%": {
       transform: `translate(${x * 0.25}px, ${y * 0.25}px) scale(0.75, 0.75)`,
       opacity: 0.75,
     },
-    '100%': {
+    "100%": {
       opacity: 1,
     },
   });
 
-  keyframer.register('portalFadeOut', {
-    '0%': {
+  keyframer.register("portalFadeOut", {
+    "0%": {
       opacity: 1,
     },
-    '50%': {
-      transform: 'scale3d(0.5, 0.5, 0.5)',
+    "50%": {
+      transform: "scale3d(0.5, 0.5, 0.5)",
       opacity: 0.5,
     },
-    '100%': {
+    "100%": {
       transform: `translate(${x}px, ${y}px) scale3d(0.01, 0.01, 0.01)`,
       opacity: 0,
     },
   });
 
-  return ['portalFadeIn 1s ease-out', 'portalFadeOut 1s ease-out'];
+  return ["portalFadeIn 1s ease-out", "portalFadeOut 1s ease-out"];
 }
 
 export default () => {
   const { Portal, open, close, isOpen } = usePortal();
   let styleModal = {
-    position: 'fixed',
+    position: "fixed",
     top: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)'
-  }
+    width: "100%",
+    height: "100%",
+    background: "rgba(0, 0, 0, 0.5)",
+  };
 
-  const Modal = useCallback((props) =>{
+  const Modal = useCallback((props) => {
     return (
       <Portal createAnimation={createAnimation} {...props}>
-        <div style={styleModal}
-          tabIndex={-1}>
-              {props.children}
+        <div style={styleModal} tabIndex={-1}>
+          {props.children}
         </div>
-    </Portal>
-  )})
+      </Portal>
+    );
+  });
 
-  return Object.assign({},{
+  return Object.assign(
+    {},
+    {
       Modal,
       isOpen,
       open: open,
       close: close,
     }
-  )
+  );
 };
