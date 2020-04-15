@@ -1,5 +1,6 @@
 import React from 'react'
 import {  createPortal } from 'react-dom'
+import PropTypes from 'prop-types'
 
 const KEYCODES = {
     ESCAPE: 27
@@ -140,6 +141,17 @@ class Portal extends React.Component {
     closeOnEsc: true,
     closeOnOutsideClick: true
   };
-  
+
+  Portal.propTypes = {
+    // children: PropTypes.object.isRequired,
+    defaultOpen: PropTypes.bool,
+    bindTo: PropTypes.string,
+    closeOnEsc: PropTypes.bool,
+    closeOnOutsideClick: PropTypes.bool,
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func,
+    createAnimation:  PropTypes.func,
+  };
+
 export default Portal;
 
