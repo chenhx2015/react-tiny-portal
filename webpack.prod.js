@@ -4,7 +4,7 @@ const merge = require("webpack-merge");
 const base = require("./webpack.base");
 
 const path = require("path");
-// const OptimizeCss = require("optimize-css-assets-webpack-plugin");
+const OptimizeCss = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = merge(base, {
@@ -12,10 +12,9 @@ module.exports = merge(base, {
   optimization: {
     minimizer: [
       //压缩CSS代码
-      // new OptimizeCss(),
+      new OptimizeCss(),
       //压缩js代码
       // new UglifyJsPlugin({
-      //   name: ["vendor"],
       //   //启用文件缓存
       //   cache: true,
       //   //使用多线程并行运行提高构建速度
@@ -32,7 +31,7 @@ module.exports = merge(base, {
     }),
   ],
   externals: {
-    react: "react",
+    react: "React",
     "prop-types": "PropTypes",
     "react-dom": "ReactDom",
   },

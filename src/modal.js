@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import usePortal from "./usePortal";
-import CSSKeyframer from "./keyframe";
+import CSSKeyframer from "./keyframer";
 
 const keyframer = new CSSKeyframer({
   /* options */

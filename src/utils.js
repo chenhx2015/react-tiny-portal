@@ -1,31 +1,33 @@
 import isPlainObject from "is-plain-object";
-
-export const keys = (obj) => Object.keys(obj);
+import hyphenateStyleName from "hyphenate-style-name";
 
 export const isArray = (obj) => obj && Array.isArray(obj);
 
 export const isArrayLike = (obj) => isPlainObject(obj) || isArray(obj);
 
-export const strRepeat = (str, repeatCount) => {
-  let s = str;
-  let n = repeatCount;
-  let result = "";
 
-  for (;;) {
-    if (n & 1) result += s;
-    n >>= 1;
-    if (n) s += s;
-    else break;
+export const makeStyle = (selector, props) => {
+  if (!selector || (selector && selector.trim() === "") || !isPlainObject(props)) {
+    return null;
   }
 
-  return result;
+  const styles = Object.keys(props).map(key =>
+    `${hyphenateStyleName(key)}: ${props[key]};`
+  );
+
+  return `${selector}{${styles.join("")}}`;
 };
 
-export const indent = (str, size) => {
-  const eol = "\n";
 
-  return str
-    .split(eol)
-    .map((line) => strRepeat(" ", size) + line)
-    .join(eol);
+export const replaceOrInsertStyle = (dataName, name) => {
+  const el = document.querySelector(`style[${dataName}="${name}"]`);
+  if(el){
+    return el
+  }else{
+    const el = document.createElement("style");
+    el.type = "text/css";
+    el.setAttribute(dataName, name);
+    document.head.appendChild(el);
+    return el;
+  }
 };
