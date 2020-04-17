@@ -1,6 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import useModal from "../src/modal";
 import usePortal from '../src/usePortal'
 
 const styleModalContent = {
@@ -56,60 +55,6 @@ const Exmaple1 = () => {
   );
 };
 
-const ExampleModal = () => {
-
-  const { Modal, open, close } = useModal();
-
-  return (
-    <div>
-      <h3>Example Modal</h3>
-      <p>
-        <button onClick={open}>Open</button>
-      </p>
-      <Modal>
-        <div style={styleModalContent}>
-          <div style={styleModalHeader}>
-            <h5>Title</h5>
-            <button style={styleModalClose} onClick={close} type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div>
-            <p>You can also close me by pressing the &quot;ESC&quot; key.</p>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-};
-
-
-const ExampleModal2 = () => {
-  
-  const { Modal, open, close } = useModal();
-
-  return (
-    <div>
-      <h3>Example Modal 2</h3>
-      <p>
-        <button onClick={open}>Open</button>
-      </p>
-      <Modal>
-        <div style={styleModalContent}>
-          <div style={styleModalHeader}>
-            <h5>Title</h5>
-            <button style={styleModalClose} onClick={close} type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div>
-            <p>You can also close me by pressing the &quot;ESC&quot; key.</p>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-};
 
 function App() {
   return (
@@ -121,8 +66,6 @@ function App() {
       }}
     >
       <Exmaple1 />
-      <ExampleModal />
-      <ExampleModal2 />
     </div>
   );
 }
