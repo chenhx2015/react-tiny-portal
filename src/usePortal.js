@@ -3,7 +3,7 @@ import Portal from './portal'
 
 export default function usePortal() {
   // You can now get a ref directly to the DOM button:
-  const ref = useRef();
+  const ref = useRef(null);
 
   const open = useCallback((e) => {
     return ref.current && ref.current.open(e)

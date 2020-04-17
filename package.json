@@ -2,8 +2,8 @@
   "name": "react-portal-pop",
   "version": "0.1.0",
   "description": "",
-  "main": "dist/usePortal.js",
-  "module": "dist/usePortal.esm.js",
+  "main": "dist/react-portal.js",
+  "module": "dist/react-portal.esm.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rollup -c rollup.config.dev.js -w ",

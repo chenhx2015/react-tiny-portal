@@ -1,13 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import usePortal from "./usePortal";
 import CSSKeyframer from "./keyframer";
+import {replaceOrInsertStyle} from './utils'
 
-const keyframer = new CSSKeyframer({
-  /* options */
-});
+const keyframer = new CSSKeyframer();
 
-function createAnimation(portalEl, e) {
-  const start = e.target.getBoundingClientRect();
+function createAnimation(portalEl, startEl) {
+  const start = startEl.getBoundingClientRect();
   const end = portalEl.getBoundingClientRect();
 
   const x = (start.left + start.right) / 2 - (end.left + end.right) / 2;
@@ -43,36 +42,93 @@ function createAnimation(portalEl, e) {
     },
   });
 
-  return ["portalFadeIn 1s ease-out", "portalFadeOut 1s ease-out"];
+  const el = replaceOrInsertStyle('data-portal-animation', 'portal-animation');
+  if (el){
+    el.innerHTML = `.portalFade {
+        animation: portalFadeIn 1s ease-out;
+    }`;
+  }
+
+  return ()=>{
+    const el = replaceOrInsertStyle('data-portal-animation', 'portal-animation');
+    if (el){
+      el.innerHTML = `.portalFade {
+          animation: portalFadeOut 1s ease-out;
+      }`;
+    }
+  }
 }
 
-export default () => {
-  const { Portal, open, close, isOpen } = usePortal();
-  let styleModal = {
-    position: "fixed",
-    top: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0, 0, 0, 0.5)",
-  };
 
-  const Modal = useCallback((props) => {
+export default () => {
+  
+  const { Portal, open, close, isOpen } = usePortal();
+
+  const refBond = useRef(null)
+  const refAnimation = useRef(null)
+  const openModal = useCallback((e) => {
+    if(refBond.current){
+      let portalEl = refBond.current
+      refAnimation.current = createAnimation(portalEl, e.target)
+
+      return open(e)
+    }else{
+      return null
+    }
+  }, [open])
+
+  const closeModal = useCallback((e) => {
+      if(refAnimation.current){
+        refAnimation.current()
+        if(e && e.persist && typeof e.persist === 'function') {
+            e.persist()
+        }
+        if(refBond.current) {
+            let portalEl = refBond.current
+            const handleAnimationEnd = () => {
+                portalEl.removeEventListener('animationend', handleAnimationEnd);
+                close(e)
+            }
+            portalEl.addEventListener('animationend', handleAnimationEnd)
+        }
+      }else{
+          close(e)
+      }
+
+  }, [close])
+
+
+  const Modal = useCallback((props) =>{
+    let styleModal = {
+      position: "fixed",
+      top: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0, 0, 0, 0.5)",
+    };
+
+    if(props.bindTo) {
+      refBond.current = document.getElementById(props.bindTo)
+    }else{
+      refBond.current = document.body
+    }
+ 
     return (
-      <Portal createAnimation={createAnimation} {...props}>
-        <div style={styleModal} tabIndex={-1}>
-          {props.children}
-        </div>
+      <Portal {...props}  >
+          <div tabIndex={-1}  style={styleModal} className='portalFade'>
+              {props.children}
+          </div>
       </Portal>
     );
-  });
+  })
 
   return Object.assign(
     {},
     {
       Modal,
       isOpen,
-      open: open,
-      close: close,
+      open:openModal,
+      close:closeModal,
     }
   );
 };
