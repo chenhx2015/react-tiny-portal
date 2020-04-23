@@ -1,7 +1,12 @@
 {
   "name": "react-tiny-portal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
+  "keywords": [
+    "react",
+    "portal",
+    "tiny"
+  ],
   "main": "dist/react-tiny-portal.js",
   "module": "dist/react-tiny-portal.esm.js",
   "scripts": {
