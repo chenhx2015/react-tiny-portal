@@ -1,8 +1,6 @@
 # Introduction
 
-![images](./portal.gif)
-
-[demo address](https://chenhx2015.github.io/react-transform-modal/)
+[demo address](https://chenhx2015.github.io/react-tiny-portal/)
 
 # usage
 
